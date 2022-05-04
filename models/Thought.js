@@ -1,4 +1,5 @@
-const { Schema, Model } = require('mongoose');
+const { Schema, model } = require('mongoose');
+const reactionSchema = require('./Reaction');
 var moment = require('moment');
 
 // Created a thoughtSchema which will be used to create the User model
@@ -40,6 +41,6 @@ thoughtSchema.virtual('reactionCount')
     return `${this.reactions.length}`;
 });
 
-const Thought = Model('thought', thoughtSchema);
+const Thought = model('thought', thoughtSchema);
 
 module.exports = Thought;
