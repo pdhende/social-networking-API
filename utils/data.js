@@ -6,6 +6,19 @@ const username = [
     'DhenWork'
 ];
 
-const thoughts = [];
+const thoughts = [
+    'Today is a great day',
+    'Never give up',
+    'Happiness is a state of mind',
+    'Be kind',
+    'You can and you will',  
+];
 
-const reactions = [];
+const reactions = [
+    'Cool thought',
+    'So true',
+    'Simply amazing',
+    'Perfect',
+    'Nailed it'
+];
+
