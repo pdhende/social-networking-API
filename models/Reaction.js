@@ -1,4 +1,5 @@
 const { Schema, Types } = require('mongoose');
+var moment = require('moment');
 
 const reactionSchema = new Schema(
   {
@@ -30,8 +31,10 @@ const reactionSchema = new Schema(
 );
 
 // Getter function to format the date before query
-function formatDate(createdAt) {
-    return createdAt.toDateString();
+function formatDate() {
+    // return createdAt.toDateString();
+    const dateValue = moment(this.createdAt).format('MMMM Do YYYY, h:mm:ss a');
+    return dateValue;
 };
 
 module.exports = reactionSchema;

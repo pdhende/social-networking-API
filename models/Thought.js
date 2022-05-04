@@ -1,4 +1,5 @@
 const { Schema, Model } = require('mongoose');
+var moment = require('moment');
 
 // Created a thoughtSchema which will be used to create the User model
 const thoughtSchema = new Schema({
@@ -27,8 +28,10 @@ const thoughtSchema = new Schema({
     }
 );
 
-function formatDate(createdAt) {
-    return createdAt.toDateString();
+function formatDate() {
+    // return createdAt.toDateString();
+    const dateValue = moment(this.createdAt).format('MMMM Do YYYY, h:mm:ss a');
+    return dateValue;
 };
 
 // Virtual to get the count of the user's friends(array length)
