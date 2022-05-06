@@ -22,5 +22,12 @@ module.exports = {
                 res.json(user);
             }
         }).catch((err) => res.status(500).json(err));
+    },
+
+    // method to add a new user
+    addNewUser(req, res){
+        User.create(req.body)
+      .then((user) => res.json(user))
+      .catch((err) => res.status(500).json(err));
     }
 };
