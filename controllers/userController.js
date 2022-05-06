@@ -15,19 +15,34 @@ module.exports = {
         User.findById({
             _id: req.params.id
         }).select('-__v')
-        .then((user) => {
-            if(!user){
-                res.status(404).json({ message: 'User not found!'});
-            }else{
-                res.json(user);
-            }
-        }).catch((err) => res.status(500).json(err));
+            .then((user) => {
+                if (!user) {
+                    res.status(404).json({ message: 'User not found!' });
+                } else {
+                    res.json(user);
+                }
+            }).catch((err) => res.status(500).json(err));
     },
 
     // method to add a new user
-    addNewUser(req, res){
+    addNewUser(req, res) {
         User.create(req.body)
-      .then((user) => res.json(user))
-      .catch((err) => res.status(500).json(err));
+            .then((user) => res.json(user))
+            .catch((err) => res.status(500).json(err));
+    },
+
+    // method to update a user 
+    updateUser(req, res) {
+        User.findOneAndUpdate(
+            { _id: req.params.id },
+            { $set: req.body },
+            { runValidators: true, new: true } // setting runValidators to true means it runs validation on the properties before the update happens. Setting new: true means it returns the updated record.
+        ).then((user) => {
+            if (!user) {
+                res.status(404).json({ message: 'User not found!' });
+            } else {
+                res.json(user);
+            }
+        }).catch((err) => res.status(500).json(err));
     }
 };
