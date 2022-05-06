@@ -44,5 +44,20 @@ module.exports = {
                 res.json(user);
             }
         }).catch((err) => res.status(500).json(err));
+    },
+
+    // method to delete a user based on Id
+    deleteUser(req, res) {
+        console.log("in delete")
+        User.findByIdAndDelete({
+            _id: req.params.id
+        }).then((user) => {
+            if (!user) {
+                res.status(404).json({ message: 'User not found!' });
+            } else {
+                Thought.deleteMany({ _id: { $in: user.thoughts } }); //Delete the thoughts associated to this user
+            }
+        }).then(() => res.json({ message: 'User was deleted' }))
+        .catch((err) => res.status(500).json(err));
     }
 };
