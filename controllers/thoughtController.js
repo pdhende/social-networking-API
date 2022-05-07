@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongoose').Types;
-const { Thought } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
     // method to get all the thoughts
@@ -38,11 +38,23 @@ module.exports = {
         Thought.create(req.body)
             .then((thought) => {
                 thoughtId = thought._id;
-                console.log(thoughtId)
-                res.json(thought)
-            })
-        .catch((err) => res.status(500).json(err));
-
-        
-}
+                console.log(thoughtId);
+                // res.json(thought);
+                // })
+                // .catch((err) => res.status(500).json(err));
+                // console.log(req.body);
+                User.findOneAndUpdate(
+                    { _id: req.body.userId },
+                    { $addToSet: { thoughts: thoughtId } },
+                    { runValidators: true, new: true })
+                    .then((user) => {
+                        console.log(user);
+                        if (!user) {
+                            res.status(404).json({ message: 'User not found' });
+                        } else {
+                            res.json(user);
+                        }
+                    }).catch((err) => res.status(500).json(err));
+            }).catch((err) => res.status(500).json(err));
+    }
 };
