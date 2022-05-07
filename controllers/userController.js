@@ -59,5 +59,20 @@ module.exports = {
             }
         }).then(() => res.json({ message: 'User was deleted' }))
         .catch((err) => res.status(500).json(err));
+    },
+
+    // method to add a friend to users friend list
+    addNewFriend(req, res){
+        User.findOneAndUpdate(
+            {_id: req.params.userId},
+            {$addToSet: {friends : req.params.friendId}},
+            {runValidators: true, new: true}
+        ).then((user) => {
+            if (!user) {
+                res.status(404).json({ message: 'User not found!' });
+            } else {
+                res.json(user);
+            }
+        }).catch((err) => res.status(500).json(err));
     }
 };
