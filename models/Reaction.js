@@ -33,6 +33,7 @@ const reactionSchema = new Schema(
 
 // Getter function to format the date before query
 function formatRDate(dtVal) {
+  // console.log(dtVal);
     const dateValue = moment(dtVal).format('MMMM Do YYYY, h:mm:ss a');
     // const dateValue = dtVal.toUTCString();
     return dateValue;

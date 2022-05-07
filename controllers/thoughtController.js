@@ -4,10 +4,10 @@ const { Thought } = require('../models');
 module.exports = {
     // method to get all the thoughts
     getAllThoughts(req, res) {
-        console.log('get all thoughts')
+        // console.log('get all thoughts')
         Thought.find({})
             .then((thoughts) => {
-                console.log(thoughts);
+                // console.log(thoughts);
             res.json(thoughts);
         })
             .catch((err) => {
@@ -20,7 +20,7 @@ module.exports = {
         Thought.findById({
             _id: req.params.id
         }).then((thought) => {
-            console.log(thought);
+            // console.log(thought);
             if(!thought){
                 res.status(404).json({ message: 'Thought not found!'});
             }else {

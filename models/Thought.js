@@ -32,7 +32,6 @@ const thoughtSchema = new Schema({
 
 function formatTDate(dtVal) {
     const dateValue = moment(dtVal).format('MMMM Do YYYY, h:mm:ss a');
-    // const dateValue = dtVal.toUTCString();
     return dateValue;
 };
 
