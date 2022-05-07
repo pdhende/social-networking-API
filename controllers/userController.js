@@ -74,5 +74,20 @@ module.exports = {
                 res.json(user);
             }
         }).catch((err) => res.status(500).json(err));
+    },
+
+    // method to delete a friend from a users friend list
+    deleteFriend(req, res){
+        User.findOneAndUpdate(
+            {_id: req.params.userId},
+            {$pull: {friends : req.params.friendId}},
+            {new: true}
+        ).then((user) => {
+            if (!user) {
+                res.status(404).json({ message: 'User not found!' });
+            } else {
+                res.json(user);
+            }
+        }).catch((err) => res.status(500).json(err));
     }
 };
