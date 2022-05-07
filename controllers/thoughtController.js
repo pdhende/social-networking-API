@@ -38,7 +38,7 @@ module.exports = {
         Thought.create(req.body)
             .then((thought) => {
                 thoughtId = thought._id;
-                console.log(thoughtId);
+                // console.log(thoughtId);
                 // res.json(thought);
                 // })
                 // .catch((err) => res.status(500).json(err));
@@ -48,7 +48,7 @@ module.exports = {
                     { $addToSet: { thoughts: thoughtId } },
                     { runValidators: true, new: true })
                     .then((user) => {
-                        console.log(user);
+                        // console.log(user);
                         if (!user) {
                             res.status(404).json({ message: 'User not found' });
                         } else {
@@ -56,5 +56,20 @@ module.exports = {
                         }
                     }).catch((err) => res.status(500).json(err));
             }).catch((err) => res.status(500).json(err));
+    },
+
+    // method to update thought
+    updateThought(req, res){
+        Thought.findOneAndUpdate(
+            { _id: req.params.id},
+            {$set: req.body },
+            {runValidators: true, new: true})
+        .then((thought) => {
+            if (!thought) {
+                res.status(404).json({ message: 'Thought not found!' });
+            } else {
+                res.json(thought);
+            }
+        }).catch((err) => res.status(500).json(err));
     }
 };
