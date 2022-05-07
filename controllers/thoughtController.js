@@ -15,4 +15,20 @@ module.exports = {
                  res.status(500).json(err)
                 });
     },
+// method to get a single thought based on the ID
+    getThoughtById(req, res) {
+        Thought.findById({
+            _id: req.params.id
+        }).then((thought) => {
+            console.log(thought);
+            if(!thought){
+                res.status(404).json({ message: 'Thought not found!'});
+            }else {
+                res.json(thought)
+            }
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        })
+    },
 };

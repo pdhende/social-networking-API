@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
-var moment = require('moment');
+const moment = require('moment');
 
 // Created a thoughtSchema which will be used to create the User model
 const thoughtSchema = new Schema({
@@ -10,10 +10,11 @@ const thoughtSchema = new Schema({
         minLength: 1,
         maxLength: 128,
     },
-    createdAt: {
+    createdOn: {
         type: Date,
         default: Date.now(),
-        get: formatDate, //Getter function to format date
+        // get: dateValue => dateValue.toDateString(), //Getter function to format date
+        get: dateVal => formatTDate(dateVal),
     },
     username: {
         type: String,
@@ -29,9 +30,9 @@ const thoughtSchema = new Schema({
     }
 );
 
-function formatDate() {
-    // return createdAt.toDateString();
-    const dateValue = moment(this.createdAt).format('MMMM Do YYYY, h:mm:ss a');
+function formatTDate(dtVal) {
+    const dateValue = moment(dtVal).format('MMMM Do YYYY, h:mm:ss a');
+    // const dateValue = dtVal.toUTCString();
     return dateValue;
 };
 

@@ -1,5 +1,5 @@
 const { Schema, Types } = require('mongoose');
-var moment = require('moment');
+const moment = require('moment');
 
 const reactionSchema = new Schema(
   {
@@ -18,8 +18,9 @@ const reactionSchema = new Schema(
       },
       createdAt: {
         type: Date,
-        default: Date.now(),
-        get: formatDate,
+        default: Date.now(), 
+        get: dateVal => formatRDate(dateVal), //Getter function to format date
+        // get: dateValue => moment(dateValue).format('MMMM Do YYYY, h:mm:ss a'),
       },
     },
     {
@@ -31,9 +32,9 @@ const reactionSchema = new Schema(
 );
 
 // Getter function to format the date before query
-function formatDate() {
-    // return createdAt.toDateString();
-    const dateValue = moment(this.createdAt).format('MMMM Do YYYY, h:mm:ss a');
+function formatRDate(dtVal) {
+    const dateValue = moment(dtVal).format('MMMM Do YYYY, h:mm:ss a');
+    // const dateValue = dtVal.toUTCString();
     return dateValue;
 };
 
