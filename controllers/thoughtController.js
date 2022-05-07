@@ -83,5 +83,20 @@ module.exports = {
                     res.json(thought);
                 }
             }).catch((err) => res.status(500).json(err));
+    },
+
+    // method to create/add a reaction to a thought
+    addNewReaction(req, res) {
+        Thought.findOneAndUpdate(
+            {_id: req.params.thoughtId},
+            {$addToSet: { reactions: req.body}},
+            {runValidators: true, new: true}
+        ).then((thought) => {
+            if (!thought) {
+                res.status(404).json({ message: 'Thought not found!' });
+            } else {
+                res.json(thought);
+            }
+        }).catch((err) => res.status(500).json(err));
     }
 };
