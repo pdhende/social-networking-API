@@ -8,22 +8,22 @@ module.exports = {
         Thought.find({})
             .then((thoughts) => {
                 // console.log(thoughts);
-            res.json(thoughts);
-        })
+                res.json(thoughts);
+            })
             .catch((err) => {
                 console.log(err);
-                 res.status(500).json(err)
-                });
+                res.status(500).json(err)
+            });
     },
-// method to get a single thought based on the ID
+    // method to get a single thought based on the ID
     getThoughtById(req, res) {
         Thought.findById({
             _id: req.params.id
         }).then((thought) => {
             // console.log(thought);
-            if(!thought){
-                res.status(404).json({ message: 'Thought not found!'});
-            }else {
+            if (!thought) {
+                res.status(404).json({ message: 'Thought not found!' });
+            } else {
                 res.json(thought)
             }
         }).catch((err) => {
@@ -31,4 +31,18 @@ module.exports = {
             res.status(500).json(err);
         })
     },
+
+    // method to post a new thought, also associate thought to user
+    addNewThought(req, res) {
+        let thoughtId;
+        Thought.create(req.body)
+            .then((thought) => {
+                thoughtId = thought._id;
+                console.log(thoughtId)
+                res.json(thought)
+            })
+        .catch((err) => res.status(500).json(err));
+
+        
+}
 };
