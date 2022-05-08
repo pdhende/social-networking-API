@@ -54,10 +54,11 @@ module.exports = {
             if (!user) {
                 res.status(404).json({ message: 'User not found!' });
             } else {
-                Thought.deleteMany({ _id: { $in: user.thoughts } }); //Delete the thoughts associated to this user
+                Thought.deleteMany({ _id: { $in: user.thoughts } })
+                .then(() => res.json({ message: 'User and associated thoughts were deleted!' }))
+                .catch((err) => res.status(500).json(err));; //Delete the thoughts associated to this user
             }
-        }).then(() => res.json({ message: 'User and associated thoughts were deleted!' }))
-            .catch((err) => res.status(500).json(err));
+        }).catch((err) => res.status(500).json(err));
     },
 
     // method to add a friend to users friend list
