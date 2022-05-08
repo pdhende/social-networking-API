@@ -13,8 +13,7 @@ const thoughtSchema = new Schema({
     createdOn: {
         type: Date,
         default: Date.now(),
-        // get: dateValue => dateValue.toDateString(), //Getter function to format date
-        get: dateVal => formatTDate(dateVal),
+        get: dateVal => formatTDate(dateVal), //Getter function to format date
     },
     username: {
         type: String,
@@ -30,6 +29,7 @@ const thoughtSchema = new Schema({
     }
 );
 
+// getter function to format the date
 function formatTDate(dtVal) {
     const dateValue = moment(dtVal).format('MMMM Do YYYY, h:mm:ss a');
     return dateValue;
@@ -37,9 +37,9 @@ function formatTDate(dtVal) {
 
 // Virtual to get the count of the user's friends(array length)
 thoughtSchema.virtual('reactionCount')
-.get(function () {
-    return `${this.reactions.length}`;
-});
+    .get(function () {
+        return `${this.reactions.length}`;
+    });
 
 const Thought = model('thought', thoughtSchema);
 

@@ -48,7 +48,6 @@ module.exports = {
 
     // method to delete a user based on Id
     deleteUser(req, res) {
-        console.log("in delete")
         User.findByIdAndDelete({
             _id: req.params.id
         }).then((user) => {
@@ -57,16 +56,16 @@ module.exports = {
             } else {
                 Thought.deleteMany({ _id: { $in: user.thoughts } }); //Delete the thoughts associated to this user
             }
-        }).then(() => res.json({ message: 'User was deleted' }))
-        .catch((err) => res.status(500).json(err));
+        }).then(() => res.json({ message: 'User and associated thoughts were deleted!' }))
+            .catch((err) => res.status(500).json(err));
     },
 
     // method to add a friend to users friend list
-    addNewFriend(req, res){
+    addNewFriend(req, res) {
         User.findOneAndUpdate(
-            {_id: req.params.userId},
-            {$addToSet: {friends : req.params.friendId}},
-            {runValidators: true, new: true}
+            { _id: req.params.userId },
+            { $addToSet: { friends: req.params.friendId } },
+            { runValidators: true, new: true }
         ).then((user) => {
             if (!user) {
                 res.status(404).json({ message: 'User not found!' });
@@ -77,11 +76,11 @@ module.exports = {
     },
 
     // method to delete a friend from a users friend list
-    deleteFriend(req, res){
+    deleteFriend(req, res) {
         User.findOneAndUpdate(
-            {_id: req.params.userId},
-            {$pull: {friends : req.params.friendId}},
-            {new: true}
+            { _id: req.params.userId },
+            { $pull: { friends: req.params.friendId } },
+            { new: true }
         ).then((user) => {
             if (!user) {
                 res.status(404).json({ message: 'User not found!' });
